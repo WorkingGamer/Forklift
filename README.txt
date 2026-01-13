@@ -1,4 +1,62 @@
-"Forklift" is a repository containing packages for the "Autonomous Forklift" project courtesy of the "ForkBot" team at Ain Shams University.
-The repo is updated constantly as we progress into the project as well as being optimised for most efficient performance.
+# Autonomous Forklift: Perception & Control Stack
+### **Siemens-Mentored Industrial R&D Project**
 
-Feel free to follow our progress!
+## 📌 Project Overview
+An industrial-grade autonomous forklift designed for warehouse material handling. [cite_start]This project implements a full autonomous stack—from raw sensor fusion to high-level path following and automated parking—mentored by **Siemens** engineers to ensure industrial relevance[cite: 7, 30].
+
+> [cite_start]**Key Achievement:** Successfully architected a multi-board distributed computing system to handle intensive CV and Navigation tasks in real-time[cite: 155, 157].
+
+---
+
+## 🛠 System Architecture & Hardware
+[cite_start]To ensure real-time performance, the system utilized a distributed **ROS architecture**[cite: 41, 186]:
+
+* [cite_start]**Primary Compute (NVIDIA Jetson TX2):** Managed the main Autonomous Navigation Stack, Path Planning, and Control[cite: 155].
+* [cite_start]**Vision Compute (NVIDIA Jetson Nano):** Dedicated to the CV module (Box detection & pose estimation) to offload computational intensity from the main board[cite: 155].
+* **Low-Level Control (3x STM32 Blue Pill):**
+    * [cite_start]**ECU 1:** Motorized Fork Control (Interrupt-driven PID)[cite: 155, 258].
+    * [cite_start]**ECU 2:** Steering Control[cite: 155, 264].
+    * [cite_start]**ECU 3:** Drive Speed Control[cite: 155, 270].
+* [cite_start]**Sensor Suite:** 2D LiDAR (YDLidar-X4), Stereo Depth Camera (Kinect v1), Drive/Steer Encoders, MPU-9250 Accelerometer (via Arduino buffer), and IR lift sensors[cite: 70, 406].
+
+---
+
+## 🚀 Key Modules (Developed from Scratch)
+
+### 1. Advanced Control & Motion Logic (Lead Developer)
+[cite_start]Unlike standard packages, we developed a custom **Control Module** that implements[cite: 41]:
+* [cite_start]**Pure Pursuit Algorithm:** High-accuracy path tracking with dynamic look-ahead distance[cite: 406].
+* [cite_start]**Velocity Scaling:** Automatic speed reduction based on steering angle to mimic real vehicle dynamics[cite: 317].
+* **Re-orientation Maneuvers:** Intelligent decision-making for forward vs. backward drive re-positioning.
+* **Automated Parking:** High-precision settlement algorithm for final goal docking.
+
+### 2. Perception & Computer Vision
+* [cite_start]**Optimized Detection:** Implemented a lightweight CNN-based detector optimized for Jetson hardware[cite: 149].
+* [cite_start]**Pose Estimation:** Combined classical CV with CNN classifiers to determine pallet orientation in 3D space using stereo depth data[cite: 73, 232].
+* [cite_start]**Obstacle Handling:** Dynamic cost-map updates using fused LiDAR and Camera data for real-time path re-planning[cite: 120, 307].
+
+### 3. Localization & Sensor Fusion
+* [cite_start]Implemented **Extended Kalman Filter (EKF)** to fuse Wheel Odometry and IMU data, significantly reducing drift in warehouse environments[cite: 186, 321].
+* [cite_start]Utilized **G-mapping and AMCL** for robust mapping and localization in unknown environments[cite: 318, 320].
+
+---
+
+## 🎮 Simulation & Optimization
+[cite_start]Because physical testing is time-consuming, we invested heavily in the **Simulation Module**[cite: 183]:
+
+* [cite_start]**Gazebo Physics Optimization:** We optimized the Gazebo physics engine (Real-Time Update Rate) to ensure the simulation ran smoothly on our development hardware while maintaining accurate friction and inertial properties for the forklift[cite: 401].
+* [cite_start]**URDF Model Stability:** We spent significant time fine-tuning the URDF inertial parameters to prevent model collapse or jitter during high-torque movements[cite: 234, 401].
+* [cite_start]**Sim-to-Real Validation:** We used the simulation to validate our **Emergency Braking Protocols** and obstacle avoidance logic before deploying them to the physical Jetson boards[cite: 186, 192].
+
+---
+
+## 📂 Repository Structure
+* [cite_start]`/control`: Custom Pure Pursuit and vehicle state management nodes[cite: 406].
+* [cite_start]`/perception`: CV module for box detection and orientation[cite: 149].
+* [cite_start]`/firmware`: STM32 (C++/HAL) and Arduino source code for low-level PID control[cite: 261].
+* [cite_start]`/simulation`: URDF models and Gazebo environments[cite: 233, 256].
+
+---
+
+## 🎓 Thesis Context
+[cite_start]This project was part of a Mechatronics Engineering Graduation Thesis at **Ain Shams University**[cite: 1, 401]. The full technical details regarding the physics engine optimization and system characterization can be found in the accompanying documentation.
