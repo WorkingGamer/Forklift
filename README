@@ -1,10 +1,10 @@
-# Autonomous Forklift: Perception & Control Stack
+#  Autonomous Forklift: Perception & Control Stack
 ### **Siemens-Mentored Industrial R&D Project**
 
 ## 📌 Project Overview
 An industrial-grade autonomous forklift designed for warehouse material handling. [cite_start]This project implements a full autonomous stack—from raw sensor fusion to high-level path following and automated parking—mentored by **Siemens** engineers to ensure industrial relevance[cite: 7, 30].
 
-> [cite_start]**Key Achievement:** Successfully architected a multi-board distributed computing system to handle intensive CV and Navigation tasks in real-time[cite: 155, 157].
+> [cite_start] **Key Achievement:** Successfully architected a multi-board distributed computing system to handle intensive CV and Navigation tasks in real-time[cite: 155, 157].
 
 ---
 
